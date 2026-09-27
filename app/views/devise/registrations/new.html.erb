@@ -3,26 +3,49 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+  <div>
+    <p><%= f.label :name, "ユーザー名" %></p>
+    <p><%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "ユーザー名を入力" %></p>
+    <p>
+      <% if f.object.errors[:name].any? %>
+        ユーザー名<%= f.object.errors[:name].first %>
+      <% end %>
+    </p>
   </div>
 
   <div class="field">
-    <p><%= f.label :password %></p>
-    <% if @minimum_password_length %>
-      <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
-    <% end %>
-    <p><%= f.password_field :password, autocomplete: "new-password" %></p>
+    <p><%= f.label :email, "メールアドレス" %></p>
+    <p><%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレスを入力" %></p>
+    <p>
+      <% if f.object.errors[:email].any? %>
+        メールアドレス<%= f.object.errors[:email].first %>
+      <% end %>
+    </p>
   </div>
 
   <div class="field">
-    <p><%= f.label :password_confirmation %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
+    <p><%= f.label :password, "パスワード" %></p>
+    <p><%= f.password_field :password, autocomplete: "new-password", placeholder: "パスワードを入力" %></p>
+    <p>
+      <% if f.object.errors[:password].any? %>
+        パスワード<%= f.object.errors[:password].first %>
+      <% end %>
+    </p>
+  </div>
+
+  <div class="field">
+    <p><%= f.label :password_confirmation, "確認用パスワード" %></p>
+    <p><%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "確認用パスワードを入力" %></p>
+    <p>
+      <% if f.object.errors[:password_confirmation].any? %>
+        パスワード<%= f.object.errors[:password_confirmation].first %>
+      <% end %>
+    </p>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "新しいアカウントを作成" %>
+    <%= link_to "アカウントをお持ちの方はこちら", new_user_session_path %>
   </div>
 <% end %>
 

@@ -18,6 +18,24 @@
   </head>
 
   <body>
+
+    <header>
+      <% if user_signed_in? %>
+
+        <% if current_user.image.attached? %>
+          <%= image_tag current_user.image.variant(resize_to_fill: [50, 50]) %>
+        <% else %>
+          <%= image_tag "default_icon.png", width: 50, height: 50 %>
+        <% end %>
+
+        <%= current_user.name %>
+
+      <% else %>
+        <%= link_to "アカウント作成", new_user_registration_path %>
+        <%= link_to "ログイン", new_user_session_path %>
+      <% end %>
+    </header>
+
     <%= yield %>
   </body>
 </html>

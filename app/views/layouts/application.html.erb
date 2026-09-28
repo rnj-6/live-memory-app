@@ -29,6 +29,7 @@
         <% end %>
 
         <%= current_user.name %>
+        <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
 
       <% else %>
         <%= link_to "アカウント作成", new_user_registration_path %>

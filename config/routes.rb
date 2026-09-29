@@ -1,19 +1,17 @@
 Rails.application.routes.draw do
-  get "live_events/new"
-  get "live_events/index"
-  get "live_events/create"
-  get "live_events/show"
-  get "live_events/edit"
-  get "live_events/update"
-  get "live_events/destroy"
+
   devise_for :users, controllers: {
     registrations: "users/registrations",
     sessions: "users/sessions"
   }
 
+  # マイページ
   get "users/show", to: "users#show"
   get "users/edit", to: "users#edit"
   patch "users/show", to: "users#update"
+
+  # 参戦予定 showのみ除外
+  resources :live_events, except: :show
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

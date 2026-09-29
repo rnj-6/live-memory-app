@@ -39,6 +39,25 @@ class LiveEventsController < ApplicationController
     end
   end
 
+  # google Places API(New)で会場検索
+  def venue_search
+    query = params[:query]
+
+    response = Faraday.post(
+      "https://places.googleapis.com/v1/places:autocomplete"
+    ) do |req|
+      req.headers["Content-Type"] = "application/json"
+      req.headers["X-Goog-Api-Key"] = Rails.application.credentials.google_maps[:api_key]
+      req.headers["X-Goog-FieldMask"] = "suggestions.placePrediction.text,suggestions.placePrediction.placeId"
+      req.body = {
+        input: query,
+        includedRegionCodes: ["jp"]
+      }.to_json
+    end
+
+    render json: JSON.parse(response.body)
+  end
+
   private
 
   def live_event_params

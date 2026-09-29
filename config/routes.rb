@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get "users/edit", to: "users#edit"
   patch "users/show", to: "users#update"
 
+  get "live_events/venue_search", to: "live_events#venue_search"
+
   # 参戦予定 showのみ除外
   resources :live_events, except: :show
 

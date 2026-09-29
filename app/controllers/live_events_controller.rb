@@ -2,10 +2,6 @@ class LiveEventsController < ApplicationController
   def index
     @live_events = current_user.live_events
   end
-
-  def show
-    @live_event = current_user.live_events.find(params[:id])
-  end
   
   def new
     @live_event = current_user.live_events.new
@@ -15,7 +11,7 @@ class LiveEventsController < ApplicationController
     @live_event = current_user.live_events.new(live_event_params)
     if @live_event.save
       flash[:notice] = "予定を登録しました"
-      redirect_to action: :index
+      redirect_to live_events_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -50,7 +46,7 @@ class LiveEventsController < ApplicationController
       :title,
       :artist_name,
       :event_date,
-       :venue_name,
+      :venue_name,
       :address,
       :latitude,
       :longitude,

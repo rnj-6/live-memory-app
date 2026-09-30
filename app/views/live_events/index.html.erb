@@ -4,19 +4,19 @@
   <%= link_to "新規作成", new_live_event_path %>
   <table>
     <tr>
-        <th></th>
-      <th>📅</th>
+      <th></th>
+      <th>開催日</th>
       <th>公演名</th>
       <th>会場</th>
       <th>更新日時</th>
     </tr>
 
-    <% @live_events.each do |ive_event| %>
+    <% @live_events.each do |live_event| %>
       <tr>
         <td></td>
-        <td><%= live_event.event_date %></td>
+        <td>📅<%= live_event.event_date.strftime("%Y/%m/%d") %></td>
         <td><%= live_event.title %></td>
-        <td><%= live_event.venue_name %></td>
+        <td>📍<%= live_event.venue_name %></td>
         <td><%= live_event.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
       </tr>
     <% end %>

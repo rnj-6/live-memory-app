@@ -47,11 +47,13 @@ class LiveEventsController < ApplicationController
       "https://places.googleapis.com/v1/places:autocomplete"
     ) do |req|
       req.headers["Content-Type"] = "application/json"
-      req.headers["X-Goog-Api-Key"] = Rails.application.credentials.google_maps[:api_key]
-      req.headers["X-Goog-FieldMask"] = "suggestions.placePrediction.text,suggestions.placePrediction.placeId"
+      req.headers["X-Goog-Api-Key"] = Rails.application.credentials.dig(:google_maps, :api_key)
+      req.headers["X-Goog-FieldMask"] = "suggestions.placePrediction.text,suggestions.placePrediction.structuredFormat"
       req.body = {
         input: query,
-        includedRegionCodes: ["jp"]
+        includedRegionCodes: ["jp"],
+        languageCode: "ja",
+        regionCode: "JP"
       }.to_json
     end
 
@@ -67,9 +69,6 @@ class LiveEventsController < ApplicationController
       :event_date,
       :venue_name,
       :address,
-      :latitude,
-      :longitude,
-      :place_id
     )
   end
 end

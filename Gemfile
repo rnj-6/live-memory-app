@@ -21,6 +21,7 @@ gem "jbuilder"
 
 gem "devise"
 gem "json", "~> 2.7"
+gem "faraday"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

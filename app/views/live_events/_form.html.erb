@@ -16,7 +16,7 @@
     <%= f.text_field :artist_name, placeholder: "目当てのアーティストを入力" %>
   </div>
 
-  <div data-controller="place-autocomplete">
+  <div data-controller="place-autocomplete" data-place-autocomplete-api-key-value="<%= Rails.application.credentials.dig(:google_maps, :api_key) %>">
     <%= f.label :venue_name, "📍" %>
     <%= f.text_field :venue_name,
     id: "place-input",

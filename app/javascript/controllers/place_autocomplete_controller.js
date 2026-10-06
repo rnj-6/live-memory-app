@@ -3,50 +3,47 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["input", "results"]
 
-  connect() {
-    this.timeout = null
+  static values = {
+    apiKey: String
   }
 
-  // 入力が止まってから 300ms後に検索を実行
   search() {
-    clearTimeout(this.timeout)
-    this.timeout = setTimeout(() => {
-      const query = this.inputTarget.value.trim()
+    const query = this.inputTarget.value.trim()
 
-      if (query === "") {
-        this.resultsTarget.innerHTML = ""
-        return
-      }
+    if (query === "") {
+      this.resultsTarget.innerHTML = ""
+      return
+    }
 
-      this.fetchPlaces(query)
-    }, 300)
+    this.fetchResults(query)
   }
 
-  async fetchPlaces(query) {
+  async fetchResults(query) {
     try {
-      const response = await fetch("/live_events/venue_search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": document.querySelector(
-            'meta[name="csrf-token"]'
-          ).content
-        },
-        body: JSON.stringify({
-          query: query
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error("会場検索に失敗しました")
-      }
+      const response = await fetch(
+        "https://places.googleapis.com/v1/places:autocomplete",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": this.apiKeyValue
+          },
+          body: JSON.stringify({
+            input: query,
+            includedRegionCodes: ["jp"],
+            languageCode: "ja"
+          })
+        }
+      )
 
       const data = await response.json()
-      console.log(JSON.stringify(data, null, 2))
+
+      console.log(data)
+
       this.displayResults(data.suggestions)
+
     } catch (error) {
       console.error("会場検索エラー:", error)
-      this.resultsTarget.innerHTML = ""
     }
   }
 
@@ -65,26 +62,20 @@ export default class extends Controller {
       mainText.textContent = place.structuredFormat.mainText.text
 
       const secondaryText = document.createElement("div")
-      secondaryText.textContent = place.structuredFormat.secondaryText?.text || ""
+      secondaryText.textContent =
+        place.structuredFormat.secondaryText?.text || ""
 
       button.appendChild(mainText)
       button.appendChild(secondaryText)
-    
+
       button.addEventListener("click", () => {
-        this.selectPlace(place)
+        this.inputTarget.value =
+          place.structuredFormat.mainText.text
+
+        this.resultsTarget.innerHTML = ""
       })
-      
+
       this.resultsTarget.appendChild(button)
     })
   }
-
-  selectPlace(place) {
-    this.inputTarget.value = place.structuredFormat.mainText.text
-
-    // 結果をクリア
-    this.resultsTarget.innerHTML = ""
-  }
-} 
-
-
-
+}

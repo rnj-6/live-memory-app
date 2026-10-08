@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_06_143333) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_08_144324) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -52,6 +52,16 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_06_143333) do
     t.index ["user_id"], name: "index_live_events_on_user_id"
   end
 
+  create_table "live_logs", force: :cascade do |t|
+    t.integer "live_event_id", null: false
+    t.integer "satisfaction"
+    t.string "people"
+    t.text "impression"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["live_event_id"], name: "index_live_logs_on_live_event_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -68,4 +78,5 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_06_143333) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "live_events", "users"
+  add_foreign_key "live_logs", "live_events"
 end

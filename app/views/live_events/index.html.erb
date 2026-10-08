@@ -1,10 +1,10 @@
-<div>
+<div data-controller="live-events">
   <h2>参戦予定リスト</h2>
   
   <%= link_to "新規作成", new_live_event_path %>
   <table>
     <tr>
-      <th></th>
+      <th>参戦済</th>
       <th>開催日</th>
       <th>公演名</th>
       <th>会場</th>
@@ -14,7 +14,15 @@
 
     <% @live_events.each do |live_event| %>
       <tr>
-        <td></td>
+        <td>
+          <label class="attended-toggle">
+            <%= check_box_tag "live_event_ids[]", live_event.id, live_event.attended,
+            data: { action: "change->live-events#toggleAttended" },
+            class: "attended-checkbox" %>
+            <span class="attended-note">♪</span> <%# 後で♪の色と大きさを変更 %>
+          </label>
+        </td>
+
         <td>📅<%= live_event.event_date.strftime("%Y/%m/%d") %></td>
         <td><%= live_event.title %></td>
         <td>📍<%= live_event.venue_name %></td>

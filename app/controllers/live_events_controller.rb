@@ -23,9 +23,15 @@ class LiveEventsController < ApplicationController
 
   def update
     @live_event = current_user.live_events.find(params[:id])
+    
     if @live_event.update(live_event_params)
-      flash[:notice] = "予定を編集しました"
-      redirect_to live_events_path
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "予定を編集しました"
+          redirect_to live_events_path
+        end
+        format.json { render json: { attended: @live_event.attended } }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -69,6 +75,7 @@ class LiveEventsController < ApplicationController
       :event_date,
       :venue_name,
       :address,
+      :attended
     )
   end
 end

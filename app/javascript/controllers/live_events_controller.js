@@ -2,6 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="live-events"
 export default class extends Controller {
+  static targets = ["liveLogLink"]
+  
   connect() {
   }
 
@@ -15,6 +17,11 @@ export default class extends Controller {
     console.log("Attended:", attended)
 
     note.classList.toggle("attended", attended)
+
+    const liveLogLink = this.liveLogLinkTargets.find((element) => element.dataset.liveEventId === liveEventId)
+    if (liveLogLink) {
+      liveLogLink.classList.toggle("is-hidden", !attended)
+    }
 
     fetch(`/live_events/${liveEventId}`, {
       method: "PATCH",

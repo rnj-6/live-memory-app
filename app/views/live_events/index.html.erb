@@ -9,6 +9,7 @@
       <th>公演名</th>
       <th>会場</th>
       <th>更新日時</th>
+      <th>ライブログ</th>
       <th></th>
     </tr>
 
@@ -27,6 +28,16 @@
         <td><%= live_event.title %></td>
         <td>📍<%= live_event.venue_name %></td>
         <td><%= live_event.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+
+        <td>
+          <div
+            data-live-event-id="<%= live_event.id %>"
+            data-live-events-target="liveLogLink"
+            class="<%= live_event.attended? ? '' : 'is-hidden' %>"
+          >
+            <%= link_to "✎", new_live_event_live_log_path(live_event) %>
+          </div>
+        </td>
 
         <td>
           <details>

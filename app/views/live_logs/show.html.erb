@@ -1,0 +1,47 @@
+<h2>ライブログ</h2>
+
+<%= link_to "編集", edit_live_event_live_log_path(@live_event) %>
+<%= link_to "戻る", live_events_path %>
+
+<div>
+  <div>
+    <p>開催日</p>
+    <p><%= @live_event.event_date.strftime("%Y/%m/%d") %></p>
+  </div>
+
+  <div>
+    <p>公演名</p>
+    <p><%= @live_event.title %></p>
+  </div>
+
+  <div>
+    <p>会場</p>
+    <p><%= @live_event.venue_name %></p>
+  </div>
+
+  <div>
+    <p>満足度</p>
+    <p><%= @live_log.satisfaction %></p>
+  </div>
+
+  <div>
+    <p>感想</p>
+    <p><%= @live_log.impression %></p>
+  </div>
+
+  <div>
+    <p>同行者</p>
+    <p><%= @live_log.people %></p>
+  </div>
+
+  <div>
+    <p>写真</p>
+    <% if @live_log.photos.attached? %>
+      <% @live_log.photos.each do |photo| %>
+        <%= image_tag photo.variant(resize_to_limit: [300, 300]) %>
+      <% end %>
+    <% else %>
+      <p>写真はありません</p>
+    <% end %>
+  </div>
+</div>

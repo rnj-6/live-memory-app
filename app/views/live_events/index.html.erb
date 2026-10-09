@@ -35,7 +35,11 @@
             data-live-events-target="liveLogLink"
             class="<%= live_event.attended? ? '' : 'is-hidden' %>"
           >
-            <%= link_to "✎", new_live_event_live_log_path(live_event) %>
+            <%= link_to "✎",
+              (live_event.live_log.present? ?
+                live_event_live_log_path(live_event) :
+                new_live_event_live_log_path(live_event)
+              ) %>
           </div>
         </td>
 

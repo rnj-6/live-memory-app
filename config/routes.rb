@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   
   # 参戦予定 showのみ除外
   resources :live_events, except: :show do
-    resource :live_log, except: [:index, :show]
+    resource :live_log, except: :index
   end
 
   # 会場検索

@@ -1,45 +1,45 @@
 <div>
-    <%= form_with model: @live_log, url: live_event_live_log_path(@live_event), local: true do |f| %>
+  <%= form_with model: @live_log, url: live_event_live_log_path(@live_event), local: true do |f| %>
 
-      <div>
-        <%= f.label :event_date %>
-        <%= @live_event.event_date.strftime("%Y/%m/%d") %>
-      </div>
+    <div>
+      <%= f.label :event_date %>
+      <%= @live_event.event_date.strftime("%Y/%m/%d") %>
+    </div>
 
-      <div>
-        <%= f.label :title %>
-        <%= @live_event.title %>
-      </div>
+    <div>
+      <%= f.label :title %>
+      <%= @live_event.title %>
+    </div>
 
-      <div>
-        <%= f.label :venue_name %>
-        <%= @live_event.venue_name %>
-      </div>
+    <div>
+      <%= f.label :venue_name %>
+      <%= @live_event.venue_name %>
+    </div>
 
-      <div>
-        <%= f.label :satisfaction %>
-        <%= f.number_field :satisfaction, in: 1..5 %>
-      </div>
+    <div>
+      <%= f.label :satisfaction %>
+      <%= f.number_field :satisfaction, in: 1..5 %>
+    </div>
 
-      <div>
-        <%= f.label :impression %>
-        <%= f.text_area :impression %>
-      </div>
+    <div>
+      <%= f.label :impression %>
+      <%= f.text_area :impression %>
+    </div>
 
-      <div>
-        <%= f.label :people %>
-        <%= f.text_field :people %>
-      </div>
+    <div>
+      <%= f.label :people %>
+      <%= f.text_field :people %>
+    </div>
 
-      <div>
-        <%= f.label :photos %>
-        <%= f.file_field :photos, multiple: true %>
-      </div>
+    <div>
+      <%= f.label :photos %>
+      <%= f.file_field :photos, multiple: true %>
+    </div>
 
-      <div>
-        <%= f.submit %>
-        <%= link_to "キャンセル", live_events_path %>
-      </div>
+    <div>
+      <%= f.submit %>
+      <%= link_to "キャンセル", live_events_path %>
+    </div>
 
-    <% end %>
+  <% end %>
 </div>

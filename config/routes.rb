@@ -12,9 +12,12 @@ Rails.application.routes.draw do
 
   
   # 参戦予定 showのみ除外
-  resources :live_events, except: :show
-  post "live_events/venue_search", to: "live_events#venue_search"
+  resources :live_events, except: :show do
+    resource :live_log, except: [:index, :show]
+  end
 
+  # 会場検索
+  post "live_events/venue_search", to: "live_events#venue_search"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

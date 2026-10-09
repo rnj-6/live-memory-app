@@ -1,0 +1,58 @@
+class LiveLogsController < ApplicationController
+
+  def new
+    @live_event = current_user.live_events.find(params[:live_event_id])
+    @live_log = @live_event.build_live_log
+  end
+
+  def create
+    @live_event = current_user.live_events.find(params[:live_event_id])
+    @live_log = @live_event.build_live_log(live_log_params)
+    
+    if @live_log.save
+      flash[:notice] = "ライブログを作成しました"
+      redirect_to live_events_path
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @live_event = current_user.live_events.find(params[:live_event_id])
+    @live_log = @live_event.live_log
+  end
+
+  def update
+    @live_event = current_user.live_events.find(params[:live_event_id])
+    @live_log = @live_event.live_log
+
+    if @live_log.update(live_log_params)
+      flash[:notice] = "ライブログを更新しました"
+      redirect_to live_events_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @live_event = current_user.live_events.find(params[:live_event_id])
+    @live_log = @live_event.live_log
+
+    if @live_log.destroy
+      flash[:notice] = "ライブログを削除しました"
+      redirect_to live_events_path
+    end
+  end
+
+
+  private
+  def live_log_params
+    params.require(:live_log).permit(
+      :satisfaction,
+      :people,
+      :impression,
+      photos: []
+    )
+  end
+end
+
